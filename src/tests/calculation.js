@@ -33,7 +33,6 @@ describe('RPN calculation', function() {
     });
 
     it('does a full calculation', function() {
-        // 1 2 + 4 × 5 + 3 −
         let stack = [1, 2, 'ADD', 4, 'MUL', 5, 'ADD', 3, 'SUB'];
 
         expect(calculate(stack)).to.equal(14);
@@ -44,5 +43,11 @@ describe('RPN calculation', function() {
         let stack = [5, 1, 2, 'ADD', 4, 'MUL', 'ADD', 3, 'SUB'];
 
         expect(calculate(stack)).to.equal(14);
+    });
+
+    it('throws an error if there are not enough operands', function() {
+        let stack = [1, 'ADD'];
+
+        expect(() => { calculate(stack) }).to.throw('Not enough operands');
     });
 });

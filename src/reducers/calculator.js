@@ -52,15 +52,14 @@ function calculate(inStack) {
         }
     };
 
-    inStack.forEach((input, i) => {
+    inStack.forEach((input) => {
         if (typeof input === 'number') {
             stack.push(input);
             return;
         }
 
         if (stack.length < 2) {
-            // throw an error!
-            // TODO: Test for this.
+            throw new Error('Not enough operands');
         }
 
         val2 = stack.pop();
