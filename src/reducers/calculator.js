@@ -38,18 +38,18 @@ function calculate(inStack) {
     var stack = [];
     var val1, val2;
     var operations = {
-        'ADD': (val1, val2) => {
-            return val1 + val2;
+        'ADD': (a, b) => {
+            return a + b;
         },
-        'SUB': (val1, val2) => {
-            return val1 - val2;
+        'SUB': (a, b) => {
+            return a - b;
         },
-        'MUL': (val1, val2) => {
-            return val1 * val2;
+        'MUL': (a, b) => {
+            return a * b;
         },
-        'DIV': (val1, val2) => {
-            return val1 / val2;
-        },
+        'DIV': (a, b) => {
+            return a / b;
+        }
     };
 
     inStack.forEach((input, i) => {
@@ -63,7 +63,6 @@ function calculate(inStack) {
             // TODO: Test for this.
         }
 
-        // Handle ADD
         val2 = stack.pop();
         val1 = stack.pop();
         stack.push(operations[input](val1, val2));

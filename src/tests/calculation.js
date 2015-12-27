@@ -31,4 +31,18 @@ describe('RPN calculation', function() {
 
         expect(calculate(stack)).to.equal(1);
     });
+
+    it('does a full calculation', function() {
+        // 1 2 + 4 × 5 + 3 −
+        let stack = [1, 2, 'ADD', 4, 'MUL', 5, 'ADD', 3, 'SUB'];
+
+        expect(calculate(stack)).to.equal(14);
+    });
+
+    it('does a parenthetical calculation', function() {
+        // "5 + ((1 + 2) × 4) − 3"
+        let stack = [5, 1, 2, 'ADD', 4, 'MUL', 'ADD', 3, 'SUB'];
+
+        expect(calculate(stack)).to.equal(14);
+    });
 });
