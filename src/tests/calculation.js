@@ -7,7 +7,20 @@ describe('infix to RPN conversion', function() {
         let stack = [1, 'ADD', 1];
 
         expect(infixToRPN(stack)).to.deep.equal([1, 1, 'ADD']);
-    })
+    });
+
+    it('converts "1 + 1 - 2" to "1 1 + 2 -"', function() {
+        let stack = [1, 'ADD', 1, 'SUB', 2];
+
+        expect(infixToRPN(stack)).to.deep.equal([1, 1, 'ADD', 2, 'SUB']);
+    });
+
+    it('converts "1 + 2 x 3 - 4" to "1 2 3 x + 4 -"', function() {
+        let stack = [1, 'ADD', 2, 'MUL', 3, 'SUB', 4];
+
+        expect(infixToRPN(stack)).to.deep.equal([1, 2, 3, 'MUL', 'ADD', 4, 'SUB']);
+    });
+
 });
 
 describe('RPN calculation', function() {
@@ -49,5 +62,18 @@ describe('RPN calculation', function() {
         let stack = [1, 'ADD'];
 
         expect(() => { calculate(stack) }).to.throw('Not enough operands');
+    });
+});
+
+describe('infix calculation', function() {
+    it('calculates "1 + 1 - 2"', function() {
+        let stack = [1, 'ADD', 1, 'SUB', 2];
+
+        expect(calculate(infixToRPN(stack))).to.equal(0);
+    });
+    it('calculates "1 + 2 x 3 - 4"', function() {
+        let stack = [1, 'ADD', 2, 'MUL', 3, 'SUB', 4];
+
+        expect(calculate(infixToRPN(stack))).to.equal(3);
     });
 });

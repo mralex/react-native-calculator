@@ -23,6 +23,12 @@ function infixToRPN(stack) {
             return;
         }
 
+        if (operators.length) {
+            if (precedence[input] <= precedence[operators[0]]) {
+                output = [...output, ...operators.reverse()];
+                operators = [];
+            }
+        }
         operators.push(input);
     });
 
