@@ -2,36 +2,42 @@ import React from 'react-native';
 let {
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
 class Button extends React.Component {
     render() {
         let style = this.props.style === 'dark' ? styles.buttonDark : styles.button;
+        let touchUnderlay = this.props.style === 'dark' ? '#666' : '#aaa';
 
         return (
-            <View style={style}>
-                <Text style={styles.text}>{ this.props.value }</Text>
-            </View>
+            <TouchableHighlight underlayColor={ touchUnderlay } style={styles.base} onPress={ this.props.onPress }>
+                <View style={style}>
+                    <Text style={styles.text}>{ this.props.value }</Text>
+                </View>
+            </TouchableHighlight>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    button: {
+    base: {
         flex: .25,
+        borderRightWidth: 1,
+        borderRightColor: '#fff',
+    },
+
+    button: {
+        flex: 1,
         justifyContent: 'center',
         backgroundColor: '#eee',
-        borderRightWidth: 1,
-        borderRightColor: '#fff'
     },
 
     buttonDark: {
-        flex: .25,
+        flex: 1,
         justifyContent: 'center',
         backgroundColor: '#aaa',
-        borderRightWidth: 1,
-        borderRightColor: '#fff'
     },
 
     text: {

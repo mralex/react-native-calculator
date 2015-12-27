@@ -40,7 +40,6 @@ function infixToRPN(stack) {
 }
 
 function calculate(inStack) {
-    var result = 0;
     var stack = [];
     var val1, val2;
     var operations = {
@@ -87,6 +86,7 @@ const calculator = (state=initialState, action) => {
                 stack = stack.pop().push(value);
             } else {
                 stack = stack.push(action.value);
+                value = action.value;
             }
 
             return {
