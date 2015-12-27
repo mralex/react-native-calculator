@@ -1,8 +1,7 @@
-import { createStore } from 'redux';
 import { List, Stack } from 'immutable';
 
 const initialState = {
-    stack: [],
+    stack: Stack(),
     result: 0,
     lastType: null // null, NUM, OPR
 };
@@ -24,7 +23,6 @@ function infixToRPN(stack) {
             return;
         }
 
-        // XXX: Use immutable for proper stacks and queues?
         if (operators.size) {
             if (precedence[input] <= precedence[operators.first()]) {
                 output = output.concat(operators);
@@ -79,34 +77,53 @@ function calculate(inStack) {
 }
 
 const calculator = (state=initialState, action) => {
+    var stack, value;
     switch(action.type) {
         case 'ADD_NUMBER':
-            var stack = state.stack;
+            stack = state.stack;
 
-            if (stack)
+            if (typeof stack.first() === 'number') {
+                value = parseInt(`${ stack.first() }${ action.value }`, 10);
+                stack = stack.pop().push(value);
+            } else {
+                stack = stack.push(action.value);
+            }
 
-            return Object.assign(state, {
-                stack: [action.value, ...stack]
-            });
+            return {
+                stack: stack,
+                result: value
+            };
         case 'ADD_OPERATOR':
-            var stack = state.stack;
+            stack = state.stack;
+
+            if (typeof stack.first() !== 'number') {
+                // Don't allow multiple operators
+                // FIXME: Allow for `**`.
+                return state;
+            }
 
             return Object.assign(state, {
-                stack: [action.value, ...stack]
+                stack: stack.push(action.value)
             });
         case 'CLEAR':
             return initialState;
         case 'CALCULATE':
-            var value = calculate(infixToRPN(state.stack));
+            if (state.stack.size < 3) {
+                return state;
+            }
+
+            value = calculate(infixToRPN(state.stack.reverse()));
+
             return {
-                stack: [value],
-                result: 0
+                stack: Stack([value]),
+                result: value
             };
+        default:
+            return state;
     }
 };
 
-const store = createStore(calculator);
-export default store;
+export default calculator;
 export {
     infixToRPN,
     calculate

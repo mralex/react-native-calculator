@@ -1,4 +1,5 @@
 import React from 'react-native';
+import { connect } from 'react-redux/native';
 
 import Button from './button';
 
@@ -8,18 +9,25 @@ let {
   View,
 } = React;
 
+function mapStateToProps(state) {
+    return {
+        calculator: state
+    };
+}
+
+// @connect(mapStateToProps)
 class App extends React.Component {
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.inputBar}>
-                    <Text style={styles.value}>12345678.9</Text>
+                    <Text style={styles.value}>{ this.props.calculator.result }</Text>
                 </View>
                 <View style={styles.gridRow}>
                     <Button style="dark" value="MR" />
                     <Button style="dark" value="M-" />
                     <Button style="dark" value="M+" />
-                    <Button style="dark" value="CA" />
+                    <Button style="dark" value="CA" onClick={ () => {  } }/>
                 </View>
                 <View style={styles.gridRow}>
                     <Button value="1" />
@@ -69,10 +77,11 @@ let styles = StyleSheet.create({
     value: {
         textAlign: 'right',
         flex: 1,
-        backgroundColor: '#ef0000',
+        backgroundColor: '#ef3333',
         padding: 10,
         paddingTop: 20,
-        fontSize: 32
+        fontSize: 32,
+        color: '#fff'
     },
 
     container: {
@@ -83,4 +92,4 @@ let styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default connect(mapStateToProps)(App);
