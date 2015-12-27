@@ -5,6 +5,6 @@
 'use strict';
 
 import { AppRegistry } from 'react-native';
-import ProjectTwo from './src/index';
+import Calculator from './src/index';
 
-AppRegistry.registerComponent('ProjectTwo', () => ProjectTwo);
+AppRegistry.registerComponent('Calculator', () => Calculator);

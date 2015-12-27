@@ -1,4 +1,4 @@
-package com.projecttwo;
+package com.reactnativecalculator;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "ProjectTwo", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "ReactNativeCalculator", null);
 
         setContentView(mReactRootView);
     }
