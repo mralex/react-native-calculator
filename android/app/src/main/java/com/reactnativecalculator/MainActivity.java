@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "ReactNativeCalculator", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "Calculator", null);
 
         setContentView(mReactRootView);
     }
