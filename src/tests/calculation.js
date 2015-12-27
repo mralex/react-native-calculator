@@ -1,3 +1,4 @@
+import { Stack } from 'immutable';
 import mocha from 'mocha';
 import { expect } from 'chai';
 import { infixToRPN, calculate } from '../reducers/calculator';
@@ -6,19 +7,19 @@ describe('infix to RPN conversion', function() {
     it('converts basic addition', function() {
         let stack = [1, 'ADD', 1];
 
-        expect(infixToRPN(stack)).to.deep.equal([1, 1, 'ADD']);
+        expect(infixToRPN(stack).toArray()).to.deep.equal([1, 1, 'ADD']);
     });
 
     it('converts "1 + 1 - 2" to "1 1 + 2 -"', function() {
         let stack = [1, 'ADD', 1, 'SUB', 2];
 
-        expect(infixToRPN(stack)).to.deep.equal([1, 1, 'ADD', 2, 'SUB']);
+        expect(infixToRPN(stack).toArray()).to.deep.equal([1, 1, 'ADD', 2, 'SUB']);
     });
 
     it('converts "1 + 2 x 3 - 4" to "1 2 3 x + 4 -"', function() {
         let stack = [1, 'ADD', 2, 'MUL', 3, 'SUB', 4];
 
-        expect(infixToRPN(stack)).to.deep.equal([1, 2, 3, 'MUL', 'ADD', 4, 'SUB']);
+        expect(infixToRPN(stack).toArray()).to.deep.equal([1, 2, 3, 'MUL', 'ADD', 4, 'SUB']);
     });
 
 });

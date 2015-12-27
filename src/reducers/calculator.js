@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import { List, Stack } from 'immutable';
 
 const initialState = {
     stack: [],
@@ -8,8 +9,8 @@ const initialState = {
 
 function infixToRPN(stack) {
     // Dijkstra Shunting-yard
-    var operators = [],
-        output = [],
+    var operators = Stack(),
+        output = List(),
         precedence = {
             'ADD': 2,
             'SUB': 2,
@@ -19,21 +20,22 @@ function infixToRPN(stack) {
 
     stack.forEach((input) => {
         if (typeof input === 'number') {
-            output.push(input);
+            output = output.push(input);
             return;
         }
 
-        if (operators.length) {
-            if (precedence[input] <= precedence[operators[0]]) {
-                output = [...output, ...operators.reverse()];
-                operators = [];
+        // XXX: Use immutable for proper stacks and queues?
+        if (operators.size) {
+            if (precedence[input] <= precedence[operators.first()]) {
+                output = output.concat(operators);
+                operators = Stack();
             }
         }
-        operators.push(input);
+        operators = operators.push(input);
     });
 
-    if (operators.length) {
-        output = [...output, ...operators];
+    if (operators.size) {
+        output = output.concat(operators);
     }
 
     return output;
@@ -81,6 +83,8 @@ const calculator = (state=initialState, action) => {
         case 'ADD_NUMBER':
             var stack = state.stack;
 
+            if (stack)
+
             return Object.assign(state, {
                 stack: [action.value, ...stack]
             });
@@ -93,7 +97,7 @@ const calculator = (state=initialState, action) => {
         case 'CLEAR':
             return initialState;
         case 'CALCULATE':
-            var value = calculate(state.stack);
+            var value = calculate(infixToRPN(state.stack));
             return {
                 stack: [value],
                 result: 0
