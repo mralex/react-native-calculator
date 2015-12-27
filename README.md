@@ -12,6 +12,11 @@ Using:
 ## TODO
 * Implement entering decimals
 * Implement memory functions
+* UI tests
+
+## Tests
+The infix parser and RPN interpreter are fully tested with Mocha.
+Run: `$ npm test`
 
 ## License
 

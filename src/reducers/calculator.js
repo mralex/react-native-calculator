@@ -2,8 +2,7 @@ import { List, Stack } from 'immutable';
 
 const initialState = {
     stack: Stack(),
-    result: 0,
-    lastType: null // null, NUM, OPR
+    result: 0
 };
 
 function infixToRPN(stack) {
