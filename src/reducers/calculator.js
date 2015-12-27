@@ -9,7 +9,7 @@ const initialState = {
 function infixToRPN(stack) {
     // Dijkstra Shunting-yard
     var operators = [],
-        operands = [],
+        output = [],
         precedence = {
             'ADD': 2,
             'SUB': 2,
@@ -19,37 +19,57 @@ function infixToRPN(stack) {
 
     stack.forEach((input) => {
         if (typeof input === 'number') {
-            operands.push(input);
+            output.push(input);
             return;
         }
 
         operators.push(input);
     });
 
+    if (operators.length) {
+        output = [...output, ...operators];
+    }
+
+    return output;
 }
 
-function calculate(stack) {
-    var value = 0;
-    var lval, rval;
-    var operator = null;
+function calculate(inStack) {
+    var result = 0;
+    var stack = [];
+    var val1, val2;
+    var operations = {
+        'ADD': (val1, val2) => {
+            return val1 + val2;
+        },
+        'SUB': (val1, val2) => {
+            return val1 - val2;
+        },
+        'MUL': (val1, val2) => {
+            return val1 * val2;
+        },
+        'DIV': (val1, val2) => {
+            return val1 / val2;
+        },
+    };
 
-    stack.forEach((input) => {
+    inStack.forEach((input, i) => {
         if (typeof input === 'number') {
-            if (operator) {
-                rval
-            }
-            tmp += input;
+            stack.push(input);
             return;
         }
-        // switch(input) {
-        //     'MUL':
-        //     'DIV':
-        //     'ADD':
-        //     'SUB':
-        // }
+
+        if (stack.length < 2) {
+            // throw an error!
+            // TODO: Test for this.
+        }
+
+        // Handle ADD
+        val2 = stack.pop();
+        val1 = stack.pop();
+        stack.push(operations[input](val1, val2));
     });
 
-    return value;
+    return stack[0];
 }
 
 const calculator = (state=initialState, action) => {
@@ -79,3 +99,7 @@ const calculator = (state=initialState, action) => {
 
 const store = createStore(calculator);
 export default store;
+export {
+    infixToRPN,
+    calculate
+};

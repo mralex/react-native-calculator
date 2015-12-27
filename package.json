@@ -6,13 +6,6 @@
     "start": "react-native start",
     "test": "mocha --compilers js:babel-register --reporter spec --check-leaks src/tests/"
   },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-0"
-    ]
-  },
   "dependencies": {
     "immutable": "^3.7.6",
     "react-native": "^0.17.0",
