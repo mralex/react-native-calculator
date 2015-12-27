@@ -12,6 +12,8 @@ Using:
 ## TODO
 * Implement entering decimals
 * Implement memory functions
+* Add Android support
+* Test production builds
 * UI tests
 
 ## Tests
